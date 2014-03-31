@@ -1,0 +1,71 @@
+[core]
+        excludesfile = ~/.gitignore
+[user]
+        name = Justin Kolberg
+        email = amd.prophet@gmail.com
+[alias]
+        co = checkout
+        cp = cherry-pick
+        ci = commit
+        ca = commit -a
+        br = branch
+        ba = branch -a
+        ds = diff --patch-with-stat
+        dc = diff --patch-with-stat --cached
+        dn = diff --name-only
+        lp = log -p
+        lo = log --pretty=tformat:'%C(magenta)%h%C(reset)%C(red)%d%C(reset) %s [%C(bold blue)%an%C(reset) %C(cyan)%ar%C(reset)]'
+        lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%C(bold blue)<%an>%Creset' --abbrev-commit
+        la = log --pretty=tformat:'%C(magenta)%h%C(reset)%C(red)%d%C(reset) %s [%C(bold blue)%an%C(reset) %C(cyan)%ar%C(reset)]' --graph -p
+        mn = merge --no-ff
+        ff = merge --ff-only
+        po = push origin
+        ph = push origin HEAD
+        st = status --short
+        rb = rebase
+        rc = rebase --continue
+        ro = !sh -c 'h="$(git symbolic-ref -q HEAD)" && git rebase "origin/${h#refs/heads/}"' -
+[color]
+        branch = auto
+        diff = auto
+        interactive = auto
+        status = auto
+        ui = auto
+[color "branch"]
+       current = magenta bold
+       local = cyan bold
+       remote = blue bold
+[color "diff"]
+       commit = cyan bold
+       meta = green bold
+       old = red bold
+       new = magenta bold
+       whitespace = magenta reverse
+       frag = yellow bold
+[color "interactive"]
+       prompt = blue bold
+       header = magenta bold
+       help = green bold
+[color "status"]
+       added = green bold
+       changed = magenta bold
+       untracked = cyan bold
+[diff]
+        noprefix = true
+        renames = true
+[push]
+        default = matching
+[rerere]
+        enabled = true
+
+[git-up]
+        prune = true
+        fetch-all = true
+        log-hook = git lg $1..$2 | sed 's/^/  /'
+[git-up "bundler"]
+        check = false
+[github]
+        user = amdprophet
+        oauth-token =
+[merge]
+        tool = opendiff
