@@ -5,11 +5,9 @@
 
 (setq package-archives
       '(("melpa-stable" . "https://stable.melpa.org/packages/")
+	("melpa"       . "https://melpa.org/packages/")
 	("gnu"         . "https://elpa.gnu.org/packages/")
 	("org"         . "https://orgmode.org/elpa/")))
-
-;; only want stable melpa for now
-;;("melpa"       . "https://melpa.org/packages/")
 
 ;; no longer maintained?
 ;;("marmalade"   . "https://marmalade-repo.org/packages/")
@@ -243,6 +241,63 @@
   (setq flycheck-gometalinter-fast t)
   (setq flycheck-gometalinter-disable-linters '("gotype"))
   (add-hook 'go-mode-hook 'flycheck-mode))
+
+
+;;;;; Ruby
+
+(use-package ruby-mode
+  :ensure t
+  :mode "\\.rb\\'"
+  :mode "Rakefile\\'"
+  :mode "Gemfile\\'"
+  :mode "Berksfile\\'"
+  :mode "Vagrantfile\\'"
+  :interpreter "ruby"
+  :init
+  (setq ruby-indent-level 2
+        ruby-indent-tabs-mode nil)
+  (add-hook 'ruby-mode 'superword-mode)
+  :bind
+  (([(meta down)] . ruby-forward-sexp)
+   ([(meta up)]   . ruby-backward-sexp)
+   (("C-c C-e"    . ruby-send-region)))
+  :config
+  (add-hook 'ruby-mode-hook #'subword-mode))
+
+(use-package inf-ruby
+  :ensure t
+  :config
+  (add-hook 'ruby-mode-hook #'inf-ruby-minor-mode))
+
+(use-package yari
+  :ensure t
+  :init
+  (add-hook 'ruby-mode-hook
+            (lambda ()
+              (local-set-key [f1] 'yari))))
+
+;; rubocop-mode - requires rubocop to be installed (gem install rubocop)
+(use-package rubocop
+  :ensure t
+  :init
+  (add-hook 'ruby-mode-hook 'rubocop-mode)
+  :diminish rubocop-mode)
+
+;; robe-mode - requires pry (gem install pry pry-doc)
+(use-package robe
+  :ensure t
+  :bind ("C-M-." . robe-jump)
+  :init
+  (add-hook 'ruby-mode-hook 'robe-mode)
+  (add-to-list 'company-backends 'company-robe))
+
+
+;;;;; Web
+
+;; web-mode
+(use-package web-mode
+  :ensure t
+  :mode "\\.erb\\'")
 
 
 ;;;;; YAML
