@@ -20,7 +20,22 @@
 (setq use-package-always-ensure t)
 
 
+;;;;; Paths
+
+(use-package exec-path-from-shell
+  :custom
+  (exec-path-from-shell-check-startup-files nil)
+  :config
+  (exec-path-from-shell-copy-env "GOPATH")
+  (exec-path-from-shell-copy-env "GOROOT")
+  (exec-path-from-shell-initialize))
+
+
 ;;;;; Override Emacs Defaults
+
+;; disable auto-save and auto-backup
+(setq auto-save-default nil)
+(setq make-backup-files nil)
 
 ;; turn off mouse interface early in startup to avoid momentary display
 (when (fboundp 'menu-bar-mode) (menu-bar-mode 0))
@@ -373,6 +388,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(exec-path-from-shell-check-startup-files nil)
  '(package-selected-packages
    (quote
     (magit ghub+ all-the-icons-dired nyan-mode use-package))))
